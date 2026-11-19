@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<title>interface_atualizar</title>
+<defs>
+<filter id="lapis" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="56" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="carvao" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="63" result="g"/>
+<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.5" result="m"/>
+<feComposite in="SourceGraphic" in2="m" operator="in" result="s"/>
+<feDisplacementMap in="s" in2="g" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hachura" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
+<line x1="0" y1="0" x2="0" y2="2.6" stroke="#222927" stroke-width="1.2"/>
+</pattern>
+</defs>
+<g filter="url(#carvao)" fill="url(#hachura)" stroke="none" opacity=".95"><path d="M22 18 H42 V34 C42 40 22 40 22 34 Z"/></g>
+<g filter="url(#lapis)" fill="none" stroke="#222927" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 18 H44 V32 C44 42 20 42 20 32 Z"/><path d="M26 18 V8 M38 18 V8" stroke-width="3.2"/><path d="M32 41 V48 C32 54 40 56 46 54 C52 52 54 56 56 60"/><path d="M8 34 C10 26 14 22 18 20 M56 30 C54 24 50 22 46 21" stroke-width="1.6"/></g>
+<g fill="none" stroke="#E8E6DC" stroke-width=".8" stroke-linecap="round" opacity=".55"><path d="M24 22 L24 32"/></g>
+</svg>

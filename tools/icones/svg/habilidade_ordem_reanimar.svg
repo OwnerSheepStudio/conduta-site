@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<title>habilidade_ordem_reanimar</title>
+<defs>
+<filter id="lapis" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="23" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="carvao" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="30" result="g"/>
+<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.5" result="m"/>
+<feComposite in="SourceGraphic" in2="m" operator="in" result="s"/>
+<feDisplacementMap in="s" in2="g" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hachura" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
+<line x1="0" y1="0" x2="0" y2="2.6" stroke="#222927" stroke-width="1.2"/>
+</pattern>
+</defs>
+<g filter="url(#carvao)" fill="url(#hachura)" stroke="none" opacity=".95"><path d="M32 50 C20 42 12 34 14 24 C16 17 26 15 32 23 Z"/></g>
+<g filter="url(#lapis)" fill="none" stroke="#222927" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 52 C20 44 10 35 12 24 C14 15 26 13 32 22 C38 13 50 15 52 24 C54 35 44 44 32 52 Z"/><path d="M8 34 H21 L25 27 L30 41 L35 30 L38 34 H56" stroke-width="2.2"/></g>
+<g fill="none" stroke="#E8E6DC" stroke-width=".8" stroke-linecap="round" opacity=".55"><path d="M17 21 C18 18 21 17 24 17.5"/></g>
+</svg>

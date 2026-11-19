@@ -1,0 +1,15 @@
+{
+  // Site do Conduta em ownersheep.com.br: Worker só de arquivos estáticos (sem script).
+  // O domínio (ownersheep.com.br e www) está ligado ao Worker pelo painel da Cloudflare;
+  // como não há "routes" aqui, o deploy não mexe nessa ligação.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "conduta-site",
+  "account_id": "1dfc4f77f3b3646c200891f41b97545c",
+  "compatibility_date": "2026-10-19",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}

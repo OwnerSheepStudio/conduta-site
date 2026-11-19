@@ -1,55 +1,64 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guia para agentes que trabalham neste repositório.
 
-## Project
+## Projeto
 
-Static site for **Conduta** — a social deduction game by OwnerSheep Studio. The site's primary goal is converting visitors to join the Discord community at `https://discord.gg/mwp6Z8s8ux`.
+Site estático do **Conduta** (OwnerSheep Studio), publicado em **ownersheep.com.br** (pt-BR na raiz, `/en/` e `/es/`). Página principal com história, regras, condutas, times, habilidades, fichas, roadmap e chamadas para a Play Store e o Discord. A política de privacidade do app fica em `/conduta/policy` (usada na Google Play: **nunca remover**).
 
-Deployed at **ownersheep.com.br** via Vercel. GitHub: `NikolasRaposo/OwnerSheep`.
+## Onde está o que vai ao ar
 
-## Deploy
+```
+site/                      → raiz publicada em ownersheep.com.br
+  index.html               → /            (pt-BR)
+  en/index.html            → /en/
+  es/index.html            → /es/
+  conduta/policy.html      → /conduta/policy (política de privacidade)
+  ds-v2.css                → camada do Design System v2 (todas as línguas)
+  fonts/                   → fontes auto-hospedadas
+  portraits/<funcao>.webp  → retratos das fichas = retratos atuais do jogo (Assets/_Project/Art/Sprites/Roles/<Role>.png)
+  icons/<nome>.svg         → ícones do site, gerados por tools/icones/gerar.py (não editar à mão)
+  flags/{br,us,es}.svg     → bandeiras do seletor de idioma (dropdown <details>, fecha ao clicar fora)
+```
+
+## Ícones
+
+Desenho a lápis grafite com sombra de carvão, no estilo dos ícones que a UI artist pintou nas placas do jogo. A fonte é `tools/icones/gerar.py`: cada ícone é um SVG 64×64 transparente com três camadas (sombra em hachura, traço com tremor de lápis, risco claro de realce). Para criar ou mudar um ícone, edite o gerador e rode:
 
 ```bash
-# Deploy to production
-npx vercel --prod --yes
-
-# Push + deploy in one step
-git push && npx vercel --prod --yes
+python tools/icones/gerar.py && cp tools/icones/svg/*.svg site/icons/
 ```
 
-Vercel is configured via `vercel.json` with `outputDirectory: public`. No build step — pure static HTML. Every push to `master` triggers a new deploy automatically via the connected GitHub repo.
+`tools/icones/folha.html` mostra todos sobre a placa de metal para revisão. No site, os ícones ficam sobre uma placa `--aco-400` chanfrada nos cantos superior esquerdo e inferior direito, como os cards (`--placa-chanfro`; grafite sobre ela: 4,7:1), classes `ico-*` em `ds-v2.css`. As fichas retidas usam `ficha_retida.svg`; não usar a pintura de personagem bloqueado da artista ali.
 
-## Structure
+As três páginas de língua têm a mesma estrutura: uma mudança visual vale para as três. Os textos ficam no próprio HTML de cada língua.
 
-```
-public/
-  conduta/
-    index.html        → ownersheep.com.br/conduta       (main landing page)
-    terms/index.html  → ownersheep.com.br/conduta/terms (terms & conditions)
-    policy/index.html → ownersheep.com.br/conduta/policy (privacy policy)
-```
-
-The root-level `conduta.html`, `terms.html`, and `privacy.html` are the original source files — the canonical versions live under `public/`.
+`public/` e os HTML soltos na raiz (`conduta.html`, `terms.html`, `privacy.html`, `vercel.json`) são a versão antiga da Vercel (abril/2026) e **não** vão ao ar.
 
 ## Design System
 
-All pages share the same CSS variables and typography — no external CSS files:
+O site segue o **Design System v2 "Casa de Máquinas"** do Conduta (Drive: `02-estudio/00-ips/Conduta/Design System/conduta-design-system-v2-rascunho.md`). As páginas ainda carregam o CSS v1.3.2 embutido; `site/ds-v2.css` vem depois e redefine os **valores** das mesmas variáveis (`--surface-*`, `--ink-*`, `--accent`…), então use sempre `var(--…)` e nunca cor solta.
 
-| Variable | Value | Usage |
-|----------|-------|-------|
-| `--bg` | `#1a1812` | Page background |
-| `--bg3` | `#2a2620` | Card backgrounds |
-| `--gold` | `#c9a84c` | Accents, CTAs, highlights |
-| `--cream` | `#e8e0d0` | Primary text |
-| `--muted` | `#9a9080` | Secondary text |
-| `--border` | `rgba(201,168,76,0.18)` | Subtle dividers |
+- Metal frio (`--aco-*`, `--patina-*`), papel (`--papel-*`), luz da lâmpada (`--luz-300` = `--accent`) e ferrugem só como textura.
+- CTA = placa de metal pintado (`--patina-600` com texto `--papel-50`).
+- Títulos em Rokkitt (substituta livre da Rockwell usada na UI do jogo); corpo em Barlow; Special Elite só em metadados de arquivo.
+- Cores de time e conduta mantêm os valores do jogo, sempre com ícone e palavra.
+- Texto com contraste ≥ 4,5:1.
 
-Fonts (Google Fonts): `Cormorant SC` (headings/brand), `Cormorant Garamond` (display/legal titles), `Jost` (body/UI).
+## Deploy (Cloudflare Workers, só arquivos estáticos)
 
-## Conversion Rules
+Deploy em produção **só com autorização explícita** do Nikolas no chat.
 
-- Every CTA button must link to `https://discord.gg/mwp6Z8s8ux` with `target="_blank" rel="noopener noreferrer"`
-- Primary CTAs use `.btn.btn-gold` with the Discord SVG icon inline
-- The Discord icon SVG path is reused across all CTA buttons — copy from an existing button rather than recreating
-- CTAs appear in: hero, community-power section end, participate section end, roadmap box, final CTA section, footer nav
+```bash
+npx wrangler@4 deploy --dry-run   # confere sem publicar
+npx wrangler@4 deploy             # publica site/ no Worker conduta-site
+```
+
+O domínio está ligado ao Worker no painel da Cloudflare; `wrangler.jsonc` não declara rotas para não mexer nisso.
+
+Para conferir localmente: `python -m http.server 8787 --directory site`.
+
+## Regras de conversão
+
+- CTAs da Play Store e do Discord abrem com `target="_blank" rel="noopener noreferrer"`.
+- Toda mudança de texto vale para as três línguas.
