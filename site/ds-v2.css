@@ -1,0 +1,157 @@
+/* =====================================================================
+   CONDUTA — Design System v2 "Casa de Máquinas" (rascunho, 19/11/2026)
+   Camada aplicada por cima do CSS v1.3.2 embutido nas páginas.
+   Mantém os NOMES das variáveis do v1 (o HTML inteiro usa var(--x))
+   e troca os VALORES pela paleta amostrada da UI da UI artist.
+   Fonte da verdade: Drive/02-estudio/00-ips/Conduta/Design System/
+   conduta-design-system-v2-rascunho.md
+   ===================================================================== */
+
+@font-face{font-family:'Rokkitt';src:url('/fonts/Rokkitt-Variable.woff2') format('woff2');font-weight:100 900;font-display:swap;}
+
+:root{
+  /* primitivos v2 (amostrados das telas da artista) */
+  --aco-950:#1C1E1B; --aco-900:#282A24; --aco-800:#353832; --aco-700:#4F504B; --aco-600:#63635F;
+  --aco-500:#797976; --aco-400:#8F918C; --aco-300:#A8A79F; --aco-200:#C4C5BC; --aco-100:#E8E6DC;
+  --patina-800:#334545; --patina-700:#455655; --patina-600:#505C5B; --patina-400:#7E918E;
+  --salvia-500:#839481; --salvia-700:#586463;
+  --papel-50:#FCF6D6; --papel-200:#ECE3BF; --papel-400:#ADA88B;
+  --grafite:#222927; --luz-300:#E0D784; --ferrugem-300:#C08670; --ferrugem-500:#8B4F3D;
+
+  /* v1 -> v2: superfícies de metal frio */
+  --surface-base:var(--aco-900);
+  --surface-sunken:var(--aco-950);
+  --surface-panel:var(--aco-800);
+  --surface-panel-deep:#2B302C;
+  --surface-paper:var(--papel-50);
+  --halo:var(--papel-50);
+  --soot:var(--aco-950);
+
+  /* tinta (contraste conferido sobre base, sunken e panel) */
+  --ink:var(--aco-100);
+  --ink-soft:var(--aco-200);
+  --ink-muted:var(--aco-300);
+  --ink-on-paper:var(--grafite);
+  --ink-on-danger:var(--papel-50);
+
+  /* destaque: a luz da lâmpada (texto e realces). A ação é a placa. */
+  --accent:var(--luz-300);
+  --accent-hover:#ECE6A6;
+  --accent-pressed:#C9BE5E;
+  --accent-deep:#B5AC5A;
+  --ink-on-accent:var(--grafite);
+
+  --rust:var(--ferrugem-500);
+  --rust-bright:var(--ferrugem-300);
+  --leather:#C4A27F;
+  --danger-text:#EC8A7E;
+  --team-fanatic-text:#BE9FCC;
+
+  /* bordas e véus em aço */
+  --border-subtle:rgba(232,230,220,.10);
+  --border-medium:rgba(232,230,220,.16);
+  --border-strong:rgba(232,230,220,.32);
+
+  /* títulos: Rockwell na UI do jogo (Figma do Christian); no site, Rokkitt (OFL) */
+  --font-display:'Rokkitt','Rockwell',Georgia,serif;
+}
+
+body{ background:var(--surface-base); }
+
+/* títulos em slab: sem caixa-alta forçada da Staatliches, peso firme */
+h1,h2,h3,.wordmark{ font-family:var(--font-display); font-weight:700; letter-spacing:0; }
+
+/* Rokkitt é bem mais larga que a Staatliches: o título do topo encolhe para caber no celular */
+#hero h1.wordmark{ font-size:clamp(44px,15vw,200px) !important; }
+
+/* marca: chapa de aço gasta em vez do metal dourado */
+.wordmark{ background:linear-gradient(176deg,#F2F0E6 0%,#C4C5BC 50%,#7E918E 100%);
+  -webkit-background-clip:text; background-clip:text; }
+
+/* nav: chapa rebitada */
+nav[style*="position:fixed"]{
+  background:
+    radial-gradient(circle at 12px 50%, var(--aco-500) 0 2.5px, transparent 3px) left bottom / 32px 10px repeat-x,
+    var(--aco-800) !important;
+  border-bottom:2px solid var(--aco-950) !important;
+  box-shadow:0 3px 0 rgba(0,0,0,.35);
+}
+
+/* seções alternadas: parede sálvia apagada nas faixas "sunken" (eco do cenário da tela inicial) */
+section[style*="background:var(--surface-sunken)"]{
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(131,148,129,.10), transparent 70%),
+    var(--surface-sunken) !important;
+}
+
+/* CTAs = placa de metal pintado aparafusada (papel-50 sobre patina-600, 6,4:1) */
+a[style*="background:var(--accent)"], button[style*="background:var(--accent)"]{
+  background-color:var(--patina-600) !important;
+  color:var(--papel-50) !important;
+  border:0 !important;
+  box-shadow:inset 0 0 0 2px var(--patina-800), inset 0 0 0 4px var(--patina-400), 0 4px 0 var(--aco-950) !important;
+  text-shadow:0 1px 0 var(--patina-800);
+  background-image:
+    radial-gradient(circle at 9px 9px, var(--aco-500) 0 3px, transparent 3.5px),
+    radial-gradient(circle at calc(100% - 9px) 9px, var(--aco-500) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 9px calc(100% - 9px), var(--aco-500) 0 3px, transparent 3.5px),
+    radial-gradient(circle at calc(100% - 9px) calc(100% - 9px), var(--aco-500) 0 3px, transparent 3.5px),
+    var(--tex-dirt) !important;
+  background-size:auto, auto, auto, auto, 96px 96px !important;
+  background-repeat:no-repeat, no-repeat, no-repeat, no-repeat, repeat !important;
+  background-blend-mode:normal, normal, normal, normal, multiply !important;
+}
+a[style*="background:var(--accent)"]:hover, button[style*="background:var(--accent)"]:hover{ background-color:var(--patina-700) !important; }
+a[style*="background:var(--accent)"] svg, button[style*="background:var(--accent)"] svg{ fill:currentColor; color:var(--papel-50); }
+a:focus-visible, button:focus-visible{ outline:3px solid var(--luz-300) !important; outline-offset:3px; }
+
+/* placa do símbolo e cartas: aço, não fuligem marrom */
+.sym{ background:var(--aco-950); }
+.cutcard::after,.earcard::after{ background-color:var(--surface-panel); }
+
+/* ícones do site */
+/* ícones v2: desenho a lápis grafite (tools/icones/gerar.py), gravado numa placa de metal clara como os da UI artist.
+   grafite sobre aco-400 = 4,7:1 */
+/* placa chanfrada: mesmo corte em 45° dos cards (cantos TL e BR), com a borda seguindo a diagonal */
+:root{ --placa-chanfro:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40' preserveAspectRatio='none'%3E%3Cpolygon points='7,1 39,1 39,33 33,39 1,39 1,7' fill='%238F918C' stroke='%2363635F' stroke-width='2' vector-effect='non-scaling-stroke'/%3E%3Cpolygon points='7.8,2.6 37.4,2.6 37.4,32.2 32.2,37.4 2.6,37.4 2.6,7.8' fill='none' stroke='%23A8A79F' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+.sym:has(img.ico-sym), img.ico-head, img.ico-hab, img.ico-feat, img.ficha-retida{
+  background:var(--placa-chanfro) center / 100% 100% no-repeat !important; box-shadow:none !important; clip-path:none !important;
+  filter:drop-shadow(0 2px 0 rgba(0,0,0,.45)); }
+.sym:has(img.ico-sym)::after{ display:none; }
+.sym img.ico-sym{ width:44px; height:44px; position:relative; z-index:1; filter:none; }
+img.ico-head, img.ico-hab, img.ico-feat{ padding:3px; box-sizing:border-box; }
+img.ico-head{ width:30px; height:30px; flex:none; }
+h4 > img.ico-hab{ width:36px; height:36px; vertical-align:-10px; margin-right:10px; }
+img.ico-feat{ width:44px; height:44px; flex:none; }
+@media (max-width:560px){ .sym img.ico-sym{ width:36px; height:36px; } }
+
+/* retratos: arte atual do jogo, sem o sépia do v1 */
+#fichas img[src^="portraits/"]{ filter:none !important; }
+img.ficha-retida{ width:64px; height:64px; padding:6px; box-sizing:border-box;
+  margin:22px auto 10px; display:block; position:relative; z-index:0;
+  box-shadow:inset 0 0 0 2px var(--aco-600), inset 0 0 0 3px var(--aco-300), 0 2px 0 rgba(0,0,0,.45); opacity:.85; }
+
+/* seletor de idioma: bandeira + dropdown (funciona sem JavaScript) */
+.lang-menu{ position:relative; flex:none; font-family:var(--font-body); font-size:13px; font-weight:600; letter-spacing:.06em; }
+.lang-menu summary{ list-style:none; display:flex; align-items:center; gap:7px; cursor:pointer; padding:6px 9px;
+  color:var(--ink); background:var(--aco-950); box-shadow:inset 0 0 0 1px var(--aco-500); user-select:none; }
+.lang-menu summary::-webkit-details-marker{ display:none; }
+.lang-menu summary:hover{ box-shadow:inset 0 0 0 1px var(--aco-300); }
+.lang-menu img{ width:20px; height:14px; display:block; box-shadow:0 0 0 1px rgba(0,0,0,.45); }
+.lang-caret{ color:var(--ink-muted); transition:transform 120ms var(--ease-out); }
+.lang-menu[open] .lang-caret{ transform:rotate(180deg); }
+.lang-menu ul{ position:absolute; right:0; top:calc(100% + 6px); margin:0; padding:4px; list-style:none; min-width:150px; z-index:1001;
+  background:var(--aco-800); box-shadow:inset 0 0 0 1px var(--aco-500), 0 6px 0 rgba(0,0,0,.35); }
+.lang-menu li a{ display:flex; align-items:center; gap:10px; padding:9px 10px; color:var(--ink); text-decoration:none; letter-spacing:.02em; font-weight:500; }
+.lang-menu li a:hover{ background:var(--aco-700); }
+.lang-menu li a[aria-current="page"]{ color:var(--accent); }
+@media (max-width:560px){ .lang-menu summary span{ display:none; } }
+
+/* papel continua papel: manchas de ferrugem fria em vez de café */
+.paper-worn{ color:var(--ink-on-paper); }
+
+/* vinheta: sombra fria nos cantos */
+.wear-vignette{ background:radial-gradient(ellipse at center,transparent 52%,rgba(10,14,12,.42) 100%),
+  radial-gradient(440px 300px at 6% 2%,rgba(10,14,12,.34),transparent 70%),
+  radial-gradient(560px 360px at 97% 92%,rgba(10,14,12,.30),transparent 70%),
+  radial-gradient(300px 200px at 88% 6%,rgba(139,79,61,.14),transparent 70%) !important; }

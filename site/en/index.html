@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONDUTA — Shelter Dossier</title>
+<meta name="description" content="CONDUTA is a social deduction game inside a post-collapse shelter: 12 players, 4 teams, 3 conducts and no one worth trusting. Lie, investigate, vote, survive.">
+<link rel="canonical" href="https://ownersheep.com.br/en/">
+<link rel="alternate" hreflang="pt-BR" href="https://ownersheep.com.br/">
+<link rel="alternate" hreflang="en" href="https://ownersheep.com.br/en/">
+<link rel="alternate" hreflang="es" href="https://ownersheep.com.br/es/">
+<link rel="alternate" hreflang="x-default" href="https://ownersheep.com.br/">
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('phc_nqcpeffnAC99HLrPmfV9vNyrhbx3zziM78CLrvFumbRr',{api_host:'https://us.i.posthog.com', defaults:'2025-05-24', person_profiles:'identified_only'})
+</script>
+<style>
+@font-face{font-family:'Staatliches';src:url('../fonts/Staatliches-Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+@font-face{font-family:'Barlow';src:url('../fonts/Barlow-Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+@font-face{font-family:'Barlow';src:url('../fonts/Barlow-Medium.ttf') format('truetype');font-weight:500;font-display:swap;}
+@font-face{font-family:'Barlow';src:url('../fonts/Barlow-SemiBold.ttf') format('truetype');font-weight:600;font-display:swap;}
+@font-face{font-family:'Barlow';src:url('../fonts/Barlow-Bold.ttf') format('truetype');font-weight:700;font-display:swap;}
+@font-face{font-family:'Special Elite';src:url('../fonts/SpecialElite-Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+:root{
+--surface-base:#1C1A17;--surface-sunken:#12100E;--surface-panel:#3A342E;--surface-panel-deep:#2F2B20;--surface-paper:#F2EAD8;--halo:#FBF7EC;
+--ink:#CFC6B8;--ink-muted:#8A8177;--ink-soft:#ABA294;--ink-on-accent:#1C1A17;--ink-on-danger:#F2EAD8;--ink-on-paper:#1C1A17;
+--accent:#D8A437;--accent-hover:#E5BC55;--accent-pressed:#B98A2D;--accent-deep:#8F6D2E;--rust:#A65526;--rust-bright:#C26E35;--leather:#9C7A5B;
+--danger:#B33030;--danger-text:#E06A5C;--danger-pressed:#8F2424;--gore:#7A1F1F;--gore-shadow:#4A0F0F;
+--success:#5E8F4E;--success-text:#8FB97A;
+--team-survivors:#5E8F4E;--team-oppressors:#B33030;--team-mercenary:#9C7A5B;--team-fanatic:#82588F;--team-fanatic-text:#B392C2;
+--conduct-order:#5E8F4E;--conduct-chaos:#B33030;--conduct-unknown:#D8A437;
+--border-subtle:rgba(242,234,216,0.10);--border-medium:rgba(242,234,216,0.15);--border-strong:rgba(242,234,216,0.30);
+--overlay-light:rgba(0,0,0,0.30);--overlay-medium:rgba(0,0,0,0.50);--overlay-heavy:rgba(0,0,0,0.80);
+--font-display:'Staatliches','Arial Narrow',sans-serif;--font-body:'Barlow',system-ui,sans-serif;--font-dossier:'Special Elite','Courier New',monospace;
+--cut-sm:8px;--cut-md:12px;--cut-lg:20px;--shadow-paper:4px 6px 0 rgba(0,0,0,0.35);
+--ease-out:cubic-bezier(0.16,1,0.3,1);--ease-stamp:cubic-bezier(0.34,1.56,0.64,1);--ease-inout:cubic-bezier(0.83,0,0.17,1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--surface-base);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:58px;scroll-padding-top:64px;}
+::selection{background:var(--accent);color:var(--ink-on-accent);}
+@keyframes stamp-in{0%{transform:rotate(-7deg) scale(1.7);opacity:0;}100%{transform:rotate(-3deg) scale(1);opacity:.9;}}
+@keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+@keyframes rise{0%{transform:translateY(18px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+</style>
+<style id="wear-layer">
+/* ===== CAMADA DE DESGASTE v1.1 — feedback UI/UX 12/06/2026 ===== */
+.wear-grain2{position:fixed;inset:0;pointer-events:none;z-index:9991;opacity:.06;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='2' seed='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");}
+.wear-vignette{position:fixed;inset:0;pointer-events:none;z-index:9989;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,.40) 100%),radial-gradient(440px 300px at 6% 2%,rgba(0,0,0,.34),transparent 70%),radial-gradient(560px 360px at 97% 92%,rgba(0,0,0,.30),transparent 70%),radial-gradient(300px 200px at 88% 6%,rgba(58,38,18,.16),transparent 70%);}
+.wear-scratches{position:fixed;inset:0;pointer-events:none;z-index:9988;opacity:.05;background:repeating-linear-gradient(97deg,transparent 0 137px,rgba(242,234,216,.55) 137px 138px,transparent 138px 331px),repeating-linear-gradient(-9deg,transparent 0 211px,rgba(0,0,0,.75) 211px 212px,transparent 212px 523px);}
+.paper-worn{position:relative;transform:rotate(-.3deg);}
+.paper-worn::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;background:
+ radial-gradient(190px 150px at 10% 6%,rgba(122,90,42,.20),transparent 70%),
+ radial-gradient(260px 210px at 92% 88%,rgba(101,77,38,.18),transparent 70%),
+ radial-gradient(100px 80px at 76% 10%,rgba(122,31,31,.10),transparent 72%),
+ radial-gradient(150px 70px at 28% 97%,rgba(60,45,25,.16),transparent 70%),
+ radial-gradient(circle at 84% 16%,transparent 52px,rgba(110,80,40,.22) 55px,rgba(110,80,40,.07) 60px,transparent 65px),
+ linear-gradient(180deg,rgba(70,50,25,.10),transparent 9%,transparent 91%,rgba(70,50,25,.12)),
+ linear-gradient(90deg,rgba(70,50,25,.10),transparent 6%,transparent 94%,rgba(70,50,25,.10));}
+@media (max-width:560px){
+ .wear-scratches{display:none;}
+ .paper-worn{transform:none;}
+}
+
+/* ===== REVISAO v1.2 — feedback ao vivo do Christian (UI/UX) 13/06/2026 ===== */
+:root{ --soot:#13110D;
+ --grime:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E"); }
+/* (1) marca com tinta gasta no lugar do ambar avulso */
+.wordmark{ background:linear-gradient(176deg,#E9DEC8 0%,#CBBEA4 52%,#8B8169 100%);
+ -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+ filter:drop-shadow(0 2px 0 rgba(0,0,0,.42)); }
+/* (4) relevo nos titulos display: tipo carimbado, nao adesivo chapado */
+h1,h2,h3{ text-shadow:0 1px 0 rgba(0,0,0,.30); }
+/* (4) relevo + grao nos botoes de acento */
+a[style*="background:var(--accent)"], button[style*="background:var(--accent)"]{
+ box-shadow:inset 0 1px 0 rgba(255,240,210,.22), inset 0 -3px 6px rgba(0,0,0,.40); }
+/* (3) placa do simbolo: le em qualquer fundo, glifo cheio */
+.sym{ width:56px; height:56px; display:grid; place-items:center; position:relative; flex:none;
+ background:var(--soot);
+ clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);
+ box-shadow:inset 0 0 0 2px rgba(0,0,0,.55), inset 0 2px 5px rgba(0,0,0,.5), 0 2px 0 rgba(0,0,0,.4); }
+.sym::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.5; mix-blend-mode:overlay; background-image:var(--grime); }
+.sym svg{ width:38px; height:38px; position:relative; z-index:1; filter:drop-shadow(0 1px 0 rgba(0,0,0,.65)); }
+/* (2) chanfro com borda que ACOMPANHA o corte (camada dupla via clip herdado) */
+.cutcard,.earcard{ background:transparent !important; border:none !important; position:relative; }
+.cutcard::before,.earcard::before{ content:""; position:absolute; inset:0; z-index:0; clip-path:inherit;
+ background:linear-gradient(var(--ctop,var(--border-medium)) 0 3px, var(--border-medium) 3px); }
+.cutcard::after,.earcard::after{ content:""; position:absolute; inset:2px; z-index:0; clip-path:inherit;
+ background:var(--surface-panel); background-image:var(--grime); background-blend-mode:overlay; }
+.cutcard>*,.earcard>*{ position:relative; z-index:1; }
+@media (max-width:560px){ .sym{ width:48px; height:48px; } .sym svg{ width:32px; height:32px; } }
+
+/* ===== REVISAO v1.3 — 3a rodada Christian (UI/UX) 13/06/2026 ===== */
+/* "tudo precisa parecer super sujo e desgastado": tipos com falha de   */
+/* tinta, CTAs sujas e rachadas, documentos rasgados, mais grao.        */
+/* v1.3.1 (14/06): 4a rodada — rachadura grossa -> fissura fina, CTAs    */
+/* sem textura estranha, carimbos do site menos comidos.                */
+:root{
+ --tex-wear:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='150'%3E%3Cfilter id='tw'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.4 0.55' numOctaves='3' seed='14'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='320' height='150' filter='url(%23tw)'/%3E%3C/svg%3E");
+ --tex-chunk:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='170'%3E%3Cfilter id='tc'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.14 0.22' numOctaves='3' seed='5'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1 1 1 0 1 1 0 1 0 1 1 1 0'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='340' height='170' filter='url(%23tc)'/%3E%3C/svg%3E");
+ --tex-dirt:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='td'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.42' intercept='0.55'/%3E%3CfeFuncG type='linear' slope='0.42' intercept='0.55'/%3E%3CfeFuncB type='linear' slope='0.42' intercept='0.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23td)'/%3E%3C/svg%3E");
+ --tex-crack:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='420'%3E%3Cfilter id='cr'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.05' numOctaves='2' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='20'/%3E%3C/filter%3E%3Cg filter='url(%23cr)' stroke='%23000000' stroke-opacity='0.5' stroke-width='0.7' fill='none' stroke-linecap='round'%3E%3Cpath d='M70 30 L150 120 L130 250 L180 360'/%3E%3Cpath d='M150 120 L260 150'/%3E%3Cpath d='M130 250 L40 290'/%3E%3Cpath d='M470 40 L400 140 L440 260 L390 410'/%3E%3Cpath d='M400 140 L300 110'/%3E%3Cpath d='M440 260 L520 300'/%3E%3Cpath d='M250 360 L320 380 L420 350'/%3E%3Cpath d='M80 200 L120 215'/%3E%3Cpath d='M300 290 L350 330'/%3E%3Cpath d='M510 120 L545 160'/%3E%3C/g%3E%3C/svg%3E");
+ --mask-torn:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='360' preserveAspectRatio='none'%3E%3Cfilter id='tn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016 0.04' numOctaves='3' seed='6' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='17'/%3E%3C/filter%3E%3Crect x='9' y='9' width='582' height='342' fill='%23000' filter='url(%23tn)'/%3E%3C/svg%3E");
+}
+/* (A) falha de tinta no display grande (legivel: come so pontos) */
+.wordmark, h1, h2{ -webkit-mask-image:var(--tex-wear); mask-image:var(--tex-wear);
+ -webkit-mask-size:320px 150px; mask-size:320px 150px; }
+/* (B) CTAs sujas, nao estranhas (r4 Christian): saiu a rachadura grossa */
+/* e a mascara que furava a peca; fica so poeira fina em multiply.       */
+a[style*="background:var(--accent)"], button[style*="background:var(--accent)"],
+a[style*="background:var(--danger)"], button[style*="background:var(--danger)"]{
+ background-image:var(--tex-dirt) !important;
+ background-size:96px 96px !important;
+ background-repeat:repeat !important;
+ background-blend-mode:multiply !important; }
+/* (C) cartas: so o grime fino (r4: a rachadura parecia desenho de barro) */
+.cutcard::after,.earcard::after{ background-image:var(--grime);
+ background-size:160px 160px; background-blend-mode:overlay; }
+/* (D) documentos rasgados de verdade (borda deckled) */
+.paper-worn{ -webkit-mask-image:var(--mask-torn); mask-image:var(--mask-torn);
+ -webkit-mask-size:100% 100%; mask-size:100% 100%;
+ -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; }
+/* (E) grao global mais presente */
+.wear-grain2{ opacity:.10; }
+@media (prefers-reduced-motion: reduce){ .wordmark,h1,h2{ -webkit-mask-image:none; mask-image:none; } }
+</style>
+<link rel="preload" href="/fonts/Rokkitt-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/ds-v2.css">
+</head>
+<body>
+<div class="wear-vignette"></div><div class="wear-scratches"></div><div class="wear-grain2"></div>
+<div style="position:fixed;inset:0;pointer-events:none;z-index:9990;opacity:.08;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;height:58px;display:flex;align-items:center;gap:clamp(12px,2vw,28px);padding:0 clamp(14px,4vw,40px);background:var(--surface-sunken);border-bottom:1px solid var(--border-medium);">
+  <a href="#hero" style="font-family:var(--font-display);font-size:26px;letter-spacing:.04em;color:var(--ink);text-decoration:none;flex:none;line-height:1;">CONDUTA</a>
+  <div style="display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none;-ms-overflow-style:none;mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%);">
+    <a href="#hero" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">The Game</a>
+    <a href="#historia" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Story</a>
+    <a href="#como" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">How to Play</a>
+    <a href="#condutas" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Conducts</a>
+    <a href="#times" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Teams</a>
+    <a href="#habilidades" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Abilities</a>
+    <a href="#fichas" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Files</a>
+    <a href="#features" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Features</a>
+    <a href="#roadmap" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Roadmap</a>
+    <a href="#apoiar" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Support</a>
+    <a href="#comunidade" style="flex:none;padding:8px 11px;font-family:var(--font-body);font-weight:500;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;white-space:nowrap;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Community</a>
+  </div>
+<details class="lang-menu"><summary aria-label="Language: English"><img src="/flags/us.svg" alt="" width="20" height="14"><span>EN</span><svg class="lang-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></summary><ul><li><a href="/" hreflang="pt-BR" lang="pt-BR"><img src="/flags/br.svg" alt="" width="20" height="14">Português</a></li><li><a href="/en/" hreflang="en" lang="en" aria-current="page"><img src="/flags/us.svg" alt="" width="20" height="14">English</a></li><li><a href="/es/" hreflang="es" lang="es"><img src="/flags/es.svg" alt="" width="20" height="14">Español</a></li></ul></details></nav>
+
+<section id="hero" data-screen-label="Hero" style="position:relative;min-height:calc(100vh - 58px);display:flex;flex-direction:column;justify-content:center;padding:clamp(40px,8vw,80px) clamp(16px,5vw,64px);overflow:hidden;background:radial-gradient(ellipse 62% 58% at 70% 36%,rgba(224,215,132,.08),transparent 64%),var(--surface-base);">
+  <svg viewBox="0 0 100 120" fill="none" stroke="#B33030" stroke-width="2.2" stroke-linecap="round" style="position:absolute;right:5%;top:12%;width:clamp(120px,18vw,240px);opacity:.42;pointer-events:none;">
+    <path d="M50 14 C26 14 14 32 14 52 C14 78 22 96 30 108" opacity=".55"/>
+    <path d="M50 24 C32 24 24 38 24 54 C24 76 30 92 38 104" opacity=".7"/>
+    <path d="M50 34 C38 34 34 44 34 56 C34 74 38 88 46 100" opacity=".6"/>
+    <path d="M50 44 C44 44 44 50 44 58 C44 72 46 84 54 96" opacity=".75"/>
+    <path d="M50 54 C54 58 54 66 56 76 C58 84 62 90 66 94" opacity=".5"/>
+    <path d="M60 30 C72 36 78 46 78 58 C78 72 74 84 70 92" opacity=".65"/>
+    <path d="M68 22 C82 32 88 44 88 58 C88 74 84 88 80 96" opacity=".45"/>
+  </svg>
+  <span style="position:absolute;top:clamp(20px,6vh,60px);right:clamp(16px,6vw,80px);font-family:var(--font-display);font-size:clamp(16px,2.4vw,26px);letter-spacing:.1em;color:var(--danger-text);border:3px solid var(--danger-text);padding:4px 16px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;animation:stamp-in 320ms var(--ease-stamp) both;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+  <div style="max-width:1120px;width:100%;margin:0 auto;position:relative;z-index:2;">
+    <div style="font-family:var(--font-dossier);font-size:clamp(13px,1.6vw,15px);color:var(--ink-muted);letter-spacing:.04em;min-height:1.6em;"><span id="tw-text"></span><span style="display:inline-block;width:9px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1s step-end infinite;"></span></div>
+    <h1 class="wordmark" style="font-family:var(--font-display);font-size:clamp(78px,16vw,200px);line-height:.86;letter-spacing:.01em;color:var(--ink);text-transform:uppercase;margin:clamp(10px,2vh,22px) 0 0;">CONDUTA</h1>
+    <p style="font-family:var(--font-display);font-size:clamp(22px,3.6vw,40px);line-height:1.04;letter-spacing:.02em;color:var(--ink);text-transform:uppercase;margin-top:clamp(12px,2vh,20px);max-width:18ch;">Who will you trust when the food runs out?</p>
+    <p style="font-size:clamp(15px,1.9vw,19px);line-height:1.55;color:var(--ink-soft);max-width:60ch;margin-top:clamp(14px,2vh,22px);">Social deduction for 12 players in a shelter in post-collapse Brazil. Everyone has a public identity. Few tell the truth.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(12px,2vw,18px);align-items:center;margin-top:clamp(22px,3.5vh,36px);">
+      <div style="position:relative;">
+        <a href="https://play.google.com/store/apps/details?id=com.ownersheep.conduta" target="_blank" rel="noopener" data-cta="download-play" style="display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 30px;font-family:var(--font-body);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-on-accent);background:var(--accent);text-decoration:none;transition:background 120ms var(--ease-out),transform 120ms var(--ease-out);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);" style-hover="background:var(--accent-hover);">Get it on Play Store</a>
+      </div>
+      <a href="#comunidade" style="display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 28px;font-family:var(--font-body);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:transparent;border:2px solid var(--border-strong);text-decoration:none;transition:border-color 120ms var(--ease-out),color 120ms var(--ease-out);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);" style-hover="border-color:var(--ink);color:#fff;">Join the community</a>
+    </div>
+    <div style="font-family:var(--font-dossier);font-size:clamp(12px,1.5vw,14px);color:var(--ink-muted);letter-spacing:.05em;margin-top:clamp(20px,3vh,30px);">FREE TO PLAY <span style="color:var(--accent);">//</span> MOBILE-FIRST <span style="color:var(--accent);">//</span> 12 PLAYERS</div>
+  </div>
+</section>
+
+
+<section id="historia" data-screen-label="Story" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-sunken);border-top:1px solid var(--border-subtle);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// CHAPTER 01 <span style="color:var(--accent);">//</span> THE ARCHIVE RECORDS</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 clamp(24px,4vw,40px);">The Collapse</h2>
+    <div class="paper-worn" style="position:relative;background:var(--surface-paper);color:var(--ink-on-paper);padding:clamp(28px,5vw,56px) clamp(24px,5vw,60px);box-shadow:var(--shadow-paper);clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);max-width:880px;">
+      <div style="position:absolute;inset:0;pointer-events:none;opacity:.06;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+      <div style="position:absolute;top:-12px;left:42px;width:120px;height:30px;background:rgba(28,30,27,.10);transform:rotate(-3.5deg);border:1px solid rgba(0,0,0,.07);"></div>
+      <div style="position:relative;z-index:1;">
+        <div style="font-family:var(--font-dossier);font-size:13px;color:#63635F;letter-spacing:.04em;margin-bottom:18px;">RECORD Nº 001 <span style="color:var(--rust);">//</span> ORIGIN OF THE SHELTER <span style="color:var(--rust);">//</span> FULL TRANSCRIPT</div>
+        <p style="font-family:var(--font-display);font-size:clamp(22px,3.4vw,32px);line-height:1.06;letter-spacing:.02em;text-transform:uppercase;color:#1C1E1B;margin-bottom:20px;">The world did not end in a flash.<br>It ended in silence.</p>
+        <p style="font-size:clamp(15px,1.8vw,17px);line-height:1.66;color:#353832;margin-bottom:16px;">First came the conflicting reports. Then the blackouts. When Russia and the United States pressed their respective buttons, the northern sky burned white. Brazil was never hit by a missile. The country came apart all the same. With no international trade, the ports turned into graveyards of ships. <span style="background:#1C1E1B;color:#1C1E1B;padding:0 5px;user-select:none;">Hunger is faster than radiation.</span></p>
+        <p style="font-size:clamp(15px,1.8vw,17px);line-height:1.66;color:#353832;margin-bottom:16px;">The shelters appeared as a temporary measure: sealed subway stations, repurposed tunnels, gated blocks converted into fortresses. Out in the abandoned streets, four kinds of people came to define the new Brazil.</p>
+        <p style="font-size:clamp(15px,1.8vw,17px);line-height:1.66;color:#353832;margin-bottom:16px;">Because in the end the nuclear war was only the trigger. The real collapse started inside people.</p>
+        <p style="font-size:clamp(16px,2vw,19px);line-height:1.5;color:#1C1E1B;font-weight:600;border-top:1px solid rgba(0,0,0,.18);padding-top:18px;margin-top:4px;">And that is where this story begins. Not with heroes. Not with villains. With decisions. With conduct.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como" data-screen-label="How to Play" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-base);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// PROTOCOL <span style="color:var(--accent);">//</span> MATCH CYCLE</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">How to Play</h2>
+    <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.6;color:var(--ink-soft);max-width:62ch;margin-bottom:clamp(28px,4vw,44px);">Five steps. A cycle that repeats until someone wins or dies trying.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:880px;">
+      
+        <div style="display:flex;align-items:stretch;gap:clamp(16px,2.5vw,28px);background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.5vw,24px) clamp(18px,3vw,28px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+          <div style="font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.8;color:var(--accent);flex:none;width:clamp(46px,7vw,76px);">1</div>
+          <div style="border-left:1px solid var(--border-medium);padding-left:clamp(16px,2.5vw,28px);display:flex;flex-direction:column;justify-content:center;">
+            <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.8vw,28px);line-height:1.05;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Pick your role</h3>
+            <p style="font-size:clamp(14px,1.7vw,16px);line-height:1.5;color:var(--ink-soft);margin-top:4px;">Your public identity before the shelter.</p>
+          </div>
+        </div>
+      
+        <div style="display:flex;align-items:stretch;gap:clamp(16px,2.5vw,28px);background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.5vw,24px) clamp(18px,3vw,28px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+          <div style="font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.8;color:var(--accent);flex:none;width:clamp(46px,7vw,76px);">2</div>
+          <div style="border-left:1px solid var(--border-medium);padding-left:clamp(16px,2.5vw,28px);display:flex;flex-direction:column;justify-content:center;">
+            <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.8vw,28px);line-height:1.05;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Secret draw</h3>
+            <p style="font-size:clamp(14px,1.7vw,16px);line-height:1.5;color:var(--ink-soft);margin-top:4px;">Team, conduct and ability are dealt under seal.</p>
+          </div>
+        </div>
+      
+        <div style="display:flex;align-items:stretch;gap:clamp(16px,2.5vw,28px);background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.5vw,24px) clamp(18px,3vw,28px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+          <div style="font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.8;color:var(--accent);flex:none;width:clamp(46px,7vw,76px);">3</div>
+          <div style="border-left:1px solid var(--border-medium);padding-left:clamp(16px,2.5vw,28px);display:flex;flex-direction:column;justify-content:center;">
+            <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.8vw,28px);line-height:1.05;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Night</h3>
+            <p style="font-size:clamp(14px,1.7vw,16px);line-height:1.5;color:var(--ink-soft);margin-top:4px;">Secret actions: investigate, protect, sabotage, abduct.</p>
+          </div>
+        </div>
+      
+        <div style="display:flex;align-items:stretch;gap:clamp(16px,2.5vw,28px);background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.5vw,24px) clamp(18px,3vw,28px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+          <div style="font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.8;color:var(--accent);flex:none;width:clamp(46px,7vw,76px);">4</div>
+          <div style="border-left:1px solid var(--border-medium);padding-left:clamp(16px,2.5vw,28px);display:flex;flex-direction:column;justify-content:center;">
+            <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.8vw,28px);line-height:1.05;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Day</h3>
+            <p style="font-size:clamp(14px,1.7vw,16px);line-height:1.5;color:var(--ink-soft);margin-top:4px;">Debate, social reads and a vote. Someone goes to the gallows.</p>
+          </div>
+        </div>
+      
+        <div style="display:flex;align-items:stretch;gap:clamp(16px,2.5vw,28px);background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.5vw,24px) clamp(18px,3vw,28px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+          <div style="font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.8;color:var(--accent);flex:none;width:clamp(46px,7vw,76px);">5</div>
+          <div style="border-left:1px solid var(--border-medium);padding-left:clamp(16px,2.5vw,28px);display:flex;flex-direction:column;justify-content:center;">
+            <h3 style="font-family:var(--font-display);font-size:clamp(20px,2.8vw,28px);line-height:1.05;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Repeat</h3>
+            <p style="font-size:clamp(14px,1.7vw,16px);line-height:1.5;color:var(--ink-soft);margin-top:4px;">Night and day cycles until one team meets its objective.</p>
+          </div>
+        </div>
+      
+    </div>
+    <div style="display:flex;gap:14px;align-items:flex-start;max-width:880px;margin-top:20px;background:var(--surface-panel-deep);border-left:3px solid var(--accent);padding:clamp(14px,2.2vw,20px) clamp(16px,2.5vw,24px);">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="flex:none;margin-top:2px;"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+      <p style="font-size:clamp(14px,1.8vw,16px);line-height:1.55;color:var(--ink);"><b style="color:var(--accent-hover);font-weight:600;">Conduct is not the same as team.</b> It is a social clue, never absolute proof.</p>
+    </div>
+  </div>
+</section>
+
+<section id="condutas" data-screen-label="Conducts" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-sunken);border-top:1px solid var(--border-subtle);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// MORAL LAYER <span style="color:var(--accent);">//</span> SOCIAL READING</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">The Three Conducts</h2>
+    <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.6;color:var(--ink-soft);max-width:62ch;margin-bottom:clamp(28px,4vw,44px);">A reading layer above the vote. Colour never stands alone: always colour, icon and text.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(14px,2vw,20px);">
+      <div class="cutcard" style="--ctop:var(--conduct-order);background:var(--surface-panel);border:1px solid var(--border-medium);border-top:3px solid var(--conduct-order);padding:clamp(22px,3vw,30px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span class="sym"><img class="ico-sym" src="/icons/conduta_ordem.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+        <div style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;margin:14px 0 12px;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:rgba(94,143,78,.18);color:var(--success-text);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);">▲ Order</div>
+        <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);">Signals a tie to the survivor camp and tends to inspire trust. It can still be exploited by manipulation abilities.</p>
+      </div>
+      <div class="cutcard" style="--ctop:var(--conduct-chaos);background:var(--surface-panel);border:1px solid var(--border-medium);border-top:3px solid var(--conduct-chaos);padding:clamp(22px,3vw,30px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span class="sym"><img class="ico-sym" src="/icons/conduta_caos.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+        <div style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;margin:14px 0 12px;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:rgba(179,48,48,.20);color:var(--danger-text);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);">▲ Chaos</div>
+        <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);">Points to the oppressor camp. It reads as a high-risk signal once revealed or inferred.</p>
+      </div>
+      <div class="cutcard" style="--ctop:var(--conduct-unknown);background:var(--surface-panel);border:1px solid var(--border-medium);border-top:3px solid var(--conduct-unknown);padding:clamp(22px,3vw,30px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span class="sym"><img class="ico-sym" src="/icons/conduta_desconhecida.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+        <div style="display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 11px;margin:14px 0 12px;font-family:var(--font-body);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:rgba(216,164,55,.16);color:var(--accent-hover);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);">● Unknown</div>
+        <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);">It can belong to any alignment, Fanatic and Mercenary included. The most ambiguous conduct at the table.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="times" data-screen-label="Teams" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-base);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// COMPOSITION <span style="color:var(--accent);">//</span> 12 SEATS AT THE TABLE</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">The Four Teams</h2>
+    <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.6;color:var(--ink-soft);max-width:62ch;margin-bottom:clamp(28px,4vw,44px);">Total asymmetry. Seven against three, plus two agents playing a game of their own.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:clamp(14px,2vw,20px);">
+
+      <div class="earcard" style="--ctop:var(--team-survivors);position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);border-top:3px solid var(--team-survivors);padding:clamp(20px,2.6vw,26px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+          <span class="sym"><img class="ico-sym" src="/icons/time_sobrevivente.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+          <div style="text-align:right;"><div style="font-family:var(--font-display);font-size:38px;line-height:.8;color:var(--success-text);">7</div><div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);">PLAYERS</div></div>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:14px 0 2px;">Survivors</h3>
+        <div style="font-family:var(--font-dossier);font-size:12px;color:var(--success-text);letter-spacing:.03em;margin-bottom:10px;">// COOPERATIVE</div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);">The moral centre of the shelter: civilians, professionals and leaders trying to keep the last chance of order alive. They win by eliminating the oppressors.</p>
+      </div>
+
+      <div class="earcard" style="--ctop:var(--team-oppressors);position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);border-top:3px solid var(--team-oppressors);padding:clamp(20px,2.6vw,26px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+          <span class="sym"><img class="ico-sym" src="/icons/time_opressor.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+          <div style="text-align:right;"><div style="font-family:var(--font-display);font-size:38px;line-height:.8;color:var(--danger-text);">3</div><div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);">PLAYERS</div></div>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:14px 0 2px;">Oppressors</h3>
+        <div style="font-family:var(--font-dossier);font-size:12px;color:var(--danger-text);letter-spacing:.03em;margin-bottom:10px;">// HIDDEN AND MANIPULATIVE</div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);">They pose as survivors, steer the debate and take the shelter from the inside. They win by becoming the majority.</p>
+      </div>
+
+      <div class="earcard" style="--ctop:var(--team-mercenary);position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);border-top:3px solid var(--team-mercenary);padding:clamp(20px,2.6vw,26px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+          <span class="sym"><img class="ico-sym" src="/icons/time_mercenario.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+          <div style="text-align:right;"><div style="font-family:var(--font-display);font-size:38px;line-height:.8;color:var(--leather);">1</div><div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);">PLAYER</div></div>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:14px 0 2px;">Mercenary</h3>
+        <div style="font-family:var(--font-dossier);font-size:12px;color:var(--leather);letter-spacing:.03em;margin-bottom:10px;">// CALCULATING AND OPPORTUNIST</div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);">Hired by the elite to eliminate one specific target. Owes loyalty to no one, only to the contract.</p>
+      </div>
+
+      <div class="earcard" style="--ctop:var(--team-fanatic);position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);border-top:3px solid var(--team-fanatic);padding:clamp(20px,2.6vw,26px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+          <span class="sym"><img class="ico-sym" src="/icons/time_fanatico.svg" alt="" width="40" height="40" loading="lazy" decoding="async"></span>
+          <div style="text-align:right;"><div style="font-family:var(--font-display);font-size:38px;line-height:.8;color:var(--team-fanatic-text);">1</div><div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);">PLAYER</div></div>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:14px 0 2px;">Fanatic</h3>
+        <div style="font-family:var(--font-dossier);font-size:12px;color:var(--team-fanatic-text);letter-spacing:.03em;margin-bottom:10px;">// AMBIGUOUS AND SUICIDAL</div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);">Believes the end of the world was an inevitable punishment. Wins by being voted out: he wants to be the table's sacrifice.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="habilidades" data-screen-label="Abilities" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-sunken);border-top:1px solid var(--border-subtle);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// ARSENAL <span style="color:var(--accent);">//</span> DEALT BY THE DRAW</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">Abilities</h2>
+    <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.6;color:var(--ink-soft);max-width:64ch;margin-bottom:clamp(28px,4vw,44px);">18 secret abilities, dealt by the draw. These are the ones the archive has released:</p>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><img class="ico-head" src="/icons/conduta_ordem.svg" alt="" width="26" height="26" loading="lazy" decoding="async"><div style="font-family:var(--font-display);font-size:clamp(18px,2.4vw,24px);letter-spacing:.04em;text-transform:uppercase;color:var(--success-text);">Order</div><div style="flex:1;height:1px;background:rgba(94,143,78,.3);"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(12px,1.8vw,16px);margin-bottom:clamp(28px,4vw,40px);">
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-order);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_ordem_analise_profunda.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Deep Investigation</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Mark a target at night and receive their real team, in private, at dawn.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-order);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_ordem_execucao.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Execution</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Mid-day, with no vote and no warning: an immediate elimination in broad daylight.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-order);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_ordem_reanimar.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Revive</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">During the night, bring an eliminated player back to the table.</p></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><img class="ico-head" src="/icons/conduta_desconhecida.svg" alt="" width="26" height="26" loading="lazy" decoding="async"><div style="font-family:var(--font-display);font-size:clamp(18px,2.4vw,24px);letter-spacing:.04em;text-transform:uppercase;color:var(--accent-hover);">Unknown Conduct</div><div style="flex:1;height:1px;background:rgba(216,164,55,.3);"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(12px,1.8vw,16px);margin-bottom:clamp(28px,4vw,40px);">
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-unknown);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_desconhecido_falsificacao.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Forgery</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Mark a dead player and use a temporary copy of their ability next round.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-unknown);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_desconhecido_voto_secreto.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Secret Ballot</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Once per match, turn the public vote into an anonymous ballot. Nobody sees who voted for whom.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-unknown);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_desconhecido_ultimas_palavras.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Last Words</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">File a message that will be published automatically the moment you die.</p></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><img class="ico-head" src="/icons/conduta_caos.svg" alt="" width="26" height="26" loading="lazy" decoding="async"><div style="font-family:var(--font-display);font-size:clamp(18px,2.4vw,24px);letter-spacing:.04em;text-transform:uppercase;color:var(--danger-text);">Chaos</div><div style="flex:1;height:1px;background:rgba(179,48,48,.3);"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(12px,1.8vw,16px);margin-bottom:clamp(24px,3vw,32px);">
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-chaos);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_caos_sequestro.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Abduction</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Take someone out of circulation: the target vanishes from the day and is eliminated at nightfall.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-chaos);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_caos_manipulacao_de_dados.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Data Tampering</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">Inject a false conduct into the target's file. From then on, every analysis reads the lie.</p></div>
+      <div style="background:var(--surface-panel);border:1px solid var(--border-medium);border-left:3px solid var(--conduct-chaos);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><h4 style="font-family:var(--font-display);font-size:clamp(18px,2.2vw,22px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);"><img class="ico-hab" src="/icons/habilidade_caos_infeccao.svg" alt="" width="30" height="30" loading="lazy" decoding="async">Infection</h4><p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin-top:6px;">A social time bomb: the infected dies on their own three nights later, with no vote.</p></div>
+    </div>
+
+    <div style="position:relative;display:flex;align-items:center;gap:14px;background:var(--surface-panel-deep);border:1px dashed var(--border-strong);padding:clamp(16px,2.4vw,22px) clamp(18px,3vw,26px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);">
+      <span style="font-family:var(--font-dossier);background:var(--surface-sunken);color:var(--ink-muted);letter-spacing:.18em;padding:4px 12px;flex:none;">▓▓▓▓▓▓</span>
+      <p style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.03em;">… and 9 more abilities under seal.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fichas" data-screen-label="Files" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-base);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// SUSPECT REGISTRY <span style="color:var(--accent);">//</span> PARTIAL ACCESS</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">Suspect Files</h2>
+    <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.6;color:var(--ink-soft);max-width:66ch;margin-bottom:clamp(28px,4vw,44px);">36 roles define who you are in the eyes of the shelter. The archive released 12 files. The rest remain withheld.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:clamp(12px,1.8vw,18px);">
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 01 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/politico.webp" alt="Portrait — POLITICIAN" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">POLITICIAN</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">A master of language. Moderates debates, builds alliances and steers the table wherever he wants. Toward the truth, or toward ruin.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 02 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/policial.webp" alt="Portrait — POLICE OFFICER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">POLICE OFFICER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">A nose for lies and the training to interrogate. The last spark of the law, if his conduct allows it.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 03 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/medico.webp" alt="Portrait — DOCTOR" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">DOCTOR</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">Walks slowly, like a man carrying the lives he saved. And the ones he lost. He hears what the others try to hide.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 04 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/hacker.webp" alt="Portrait — HACKER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">HACKER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">He does not break into machines, he breaks into routines. He seems to know who is lying before the liar does.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 05 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/jornalista.webp" alt="Portrait — JOURNALIST" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">JOURNALIST</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">Embedded out of moral necessity. She makes anyone talk: every question is a scalpel, every silence a mirror.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 06 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/militar.webp" alt="Portrait — SOLDIER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">SOLDIER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">She commands respect through clarity, not fear. Trained to read micro-expressions and to react to the faintest sign of betrayal.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 07 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/psicologo.webp" alt="Portrait — PSYCHOLOGIST" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">PSYCHOLOGIST</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">He knows the inner abysses. He knows chaos does not begin outside: it seeps into the mind until it detonates.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 08 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/traficante.webp" alt="Portrait — DEALER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">DEALER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">No surname, no badge. Where there is craving, he sees demand. He knows every vice in the shelter and the exact hour to collect.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 09 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/atriz.webp" alt="Portrait — ACTRESS" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">ACTRESS</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">She lives to perform. Every tear is a stylistic choice. In a game of masks, the winner is whoever believes their own disguise.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 10 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/professora.webp" alt="Portrait — TEACHER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">TEACHER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">The calm voice in the uproar. She argues from evidence and leads the group to the truth. Or to the abyss, drop by drop.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 11 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/lider-religioso.webp" alt="Portrait — RELIGIOUS LEADER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">RELIGIOUS LEADER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">They call him "the Voice". He crosses the corridors like a man walking through an invisible temple. Nobody knows how he got in.</p>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel);border:2px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);transition:border-color 120ms var(--ease-out);" style-hover="border-color:var(--border-strong);">
+          <div style="font-family:var(--font-dossier);font-size:10.5px;color:var(--ink-muted);letter-spacing:.04em;">FILE Nº 12 // DOSSIER RELEASED</div>
+          <div style="margin:12px auto 10px;width:88px;height:88px;border-radius:50%;overflow:hidden;background:#2B302C;box-shadow:inset 0 0 0 2px rgba(12,15,13,.7),inset 0 6px 14px rgba(0,0,0,.45),0 0 0 2px rgba(126,145,142,.4);">
+            <img src="../portraits/influenciadora.webp" alt="Portrait — INFLUENCER" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:sepia(.18) contrast(1.02) brightness(.96);display:block;">
+          </div>
+          <h3 style="font-family:var(--font-display);font-size:clamp(19px,2.4vw,23px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-align:center;">INFLUENCER</h3>
+          <div style="width:36px;height:2px;background:var(--accent-deep);margin:10px auto 12px;"></div>
+          <p style="font-size:13.5px;line-height:1.5;color:var(--ink-soft);text-align:center;">Born between charisma and the camera, she turned her own identity into a brand. How much of it is true, how much is performance?</p>
+        </div>
+      
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin:clamp(28px,4vw,40px) 0 16px;"><div style="font-family:var(--font-dossier);font-size:13px;color:var(--danger-text);letter-spacing:.06em;">// MATERIAL WITHHELD BY THE ARCHIVE</div><div style="flex:1;height:1px;background:var(--border-subtle);"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,160px),1fr));gap:clamp(12px,1.8vw,16px);">
+      
+        <div style="position:relative;background:var(--surface-panel-deep);border:2px solid var(--border-subtle);padding:16px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);overflow:hidden;">
+          <div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);letter-spacing:.04em;position:absolute;top:12px;left:14px;right:14px;">FILE WITHHELD // LEVEL 3</div>
+          <img class="ficha-retida" src="/icons/ficha_retida.svg" alt="" width="64" height="64" loading="lazy" decoding="async">
+          <div style="background:var(--surface-sunken);color:transparent;height:16px;width:78%;user-select:none;transform:rotate(-1deg);"></div>
+          <span style="margin-top:14px;font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--danger-text);border:2px solid var(--danger-text);padding:1px 9px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel-deep);border:2px solid var(--border-subtle);padding:16px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);overflow:hidden;">
+          <div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);letter-spacing:.04em;position:absolute;top:12px;left:14px;right:14px;">FILE WITHHELD // LEVEL 3</div>
+          <img class="ficha-retida" src="/icons/ficha_retida.svg" alt="" width="64" height="64" loading="lazy" decoding="async">
+          <div style="background:var(--surface-sunken);color:transparent;height:16px;width:78%;user-select:none;transform:rotate(-1deg);"></div>
+          <span style="margin-top:14px;font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--danger-text);border:2px solid var(--danger-text);padding:1px 9px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel-deep);border:2px solid var(--border-subtle);padding:16px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);overflow:hidden;">
+          <div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);letter-spacing:.04em;position:absolute;top:12px;left:14px;right:14px;">FILE WITHHELD // LEVEL 3</div>
+          <img class="ficha-retida" src="/icons/ficha_retida.svg" alt="" width="64" height="64" loading="lazy" decoding="async">
+          <div style="background:var(--surface-sunken);color:transparent;height:16px;width:78%;user-select:none;transform:rotate(-1deg);"></div>
+          <span style="margin-top:14px;font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--danger-text);border:2px solid var(--danger-text);padding:1px 9px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel-deep);border:2px solid var(--border-subtle);padding:16px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);overflow:hidden;">
+          <div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);letter-spacing:.04em;position:absolute;top:12px;left:14px;right:14px;">FILE WITHHELD // LEVEL 3</div>
+          <img class="ficha-retida" src="/icons/ficha_retida.svg" alt="" width="64" height="64" loading="lazy" decoding="async">
+          <div style="background:var(--surface-sunken);color:transparent;height:16px;width:78%;user-select:none;transform:rotate(-1deg);"></div>
+          <span style="margin-top:14px;font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--danger-text);border:2px solid var(--danger-text);padding:1px 9px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+        </div>
+      
+        <div style="position:relative;background:var(--surface-panel-deep);border:2px solid var(--border-subtle);padding:16px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;clip-path:polygon(0 0,calc(100% - 18px) 0,100% 18px,100% 100%,0 100%);overflow:hidden;">
+          <div style="font-family:var(--font-dossier);font-size:10px;color:var(--ink-muted);letter-spacing:.04em;position:absolute;top:12px;left:14px;right:14px;">FILE WITHHELD // LEVEL 3</div>
+          <img class="ficha-retida" src="/icons/ficha_retida.svg" alt="" width="64" height="64" loading="lazy" decoding="async">
+          <div style="background:var(--surface-sunken);color:transparent;height:16px;width:78%;user-select:none;transform:rotate(-1deg);"></div>
+          <span style="margin-top:14px;font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--danger-text);border:2px solid var(--danger-text);padding:1px 9px;transform:rotate(-3deg);opacity:.9;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+        </div>
+      
+    </div>
+    <p style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;margin-top:18px;">+ 24 files withheld by the archive.</p>
+  </div>
+</section>
+
+<section id="features" data-screen-label="Features" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-sunken);border-top:1px solid var(--border-subtle);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// SPECIFICATIONS <span style="color:var(--accent);">//</span> WHAT IS ON THE TABLE</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 clamp(28px,4vw,44px);">Features</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:clamp(12px,1.8vw,16px);">
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_grupo_social.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">12 players per match</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Live matches, in real time.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_times.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">4 asymmetric teams</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">7 survivors, 3 oppressors, 1 mercenary, 1 fanatic.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/conduta_desconhecida.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">3 conducts</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">A layer of moral reading above the vote.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/habilidade_ordem_analise_profunda.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">18 secret abilities</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Investigation, protection, sabotage, manipulation.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_perfil.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">36 roles</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Your public identity before the shelter.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_comunicacao.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Live chat</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Debate, bluffing and secret channels, with moderation and a language filter.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/controle_editar.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Notebook</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Log suspicions and contradictions without leaving the match.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/habilidade_desconhecido_voto_secreto.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Voting with quorum</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">The gallows only work if the shelter shows up.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_atualizar.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Reconnect and host migration</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">The match does not die when someone drops.</p></div></div>
+
+      <div style="display:flex;gap:16px;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(16px,2.2vw,22px);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);"><img class="ico-feat" src="/icons/interface_jogar.svg" alt="" width="34" height="34" loading="lazy" decoding="async"><div><h4 style="font-family:var(--font-display);font-size:clamp(18px,2vw,21px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Free to play</h4><p style="font-size:14px;line-height:1.5;color:var(--ink-soft);margin-top:3px;">Mobile-first, with PC (Steam) on the cross-platform horizon.</p></div></div>
+
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" data-screen-label="Roadmap" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-base);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// TIMELINE <span style="color:var(--accent);">//</span> PROJECT STATUS</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 8px;">Roadmap</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:14px 22px;margin-bottom:clamp(28px,4vw,44px);">
+      <div style="display:flex;align-items:center;gap:7px;font-family:var(--font-dossier);font-size:12px;color:var(--ink-muted);"><span style="width:10px;height:10px;background:var(--success);"></span>COMPLETE</div>
+      <div style="display:flex;align-items:center;gap:7px;font-family:var(--font-dossier);font-size:12px;color:var(--ink-muted);"><span style="width:10px;height:10px;background:var(--accent);"></span>IN PROGRESS</div>
+      <div style="display:flex;align-items:center;gap:7px;font-family:var(--font-dossier);font-size:12px;color:var(--ink-muted);"><span style="width:10px;height:10px;background:var(--ink-muted);"></span>PLANNED</div>
+    </div>
+    <div style="position:relative;max-width:840px;padding-left:clamp(24px,4vw,40px);border-left:2px solid var(--border-medium);display:flex;flex-direction:column;gap:clamp(18px,2.6vw,26px);">
+      <div style="position:relative;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--success);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Prototype</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--success-text);border:2px solid var(--success-text);padding:1px 10px;transform:rotate(-2deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Complete</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-top:8px;">Technical foundation and the first internal matches.</p>
+      </div>
+      <div style="position:relative;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--success);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Alpha</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--success-text);border:2px solid var(--success-text);padding:1px 10px;transform:rotate(-2deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Complete</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-top:8px;">Teams, conducts, voting and abilities running on the server.</p>
+      </div>
+      <div style="position:relative;background:var(--surface-panel-deep);border:1px solid var(--accent);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--accent);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Beta</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--accent);border:2px solid var(--accent);padding:1px 10px;transform:rotate(-3deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">In progress</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-top:8px;">Locking the 18 abilities, economy, progression and player testing.</p>
+      </div>
+      <div style="position:relative;background:var(--surface-panel);border:1px solid var(--border-medium);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--accent-deep);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink);">Public demo</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--accent-hover);border:2px solid var(--accent-hover);padding:1px 10px;transform:rotate(-2deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Next up</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin-top:8px;">A vertical slice open to the community.</p>
+      </div>
+      <div style="position:relative;background:var(--surface-panel);border:1px solid var(--border-subtle);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--ink-muted);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink-soft);">Soft launch</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--ink-muted);border:2px solid var(--ink-muted);padding:1px 10px;transform:rotate(-2deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Planned</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-muted);margin-top:8px;">Regional mobile release (Google Play).</p>
+      </div>
+      <div style="position:relative;background:var(--surface-panel);border:1px solid var(--border-subtle);padding:clamp(18px,2.4vw,24px);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);">
+        <span style="position:absolute;left:calc(-1 * clamp(24px,4vw,40px) - 9px);top:24px;width:16px;height:16px;background:var(--ink-muted);border:3px solid var(--surface-base);"></span>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;"><h3 style="font-family:var(--font-display);font-size:clamp(22px,2.8vw,28px);letter-spacing:.02em;text-transform:uppercase;color:var(--ink-soft);">Launch</h3><span style="font-family:var(--font-display);font-size:14px;letter-spacing:.08em;color:var(--ink-muted);border:2px solid var(--ink-muted);padding:1px 10px;transform:rotate(-2deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Planned</span></div>
+        <p style="font-size:14.5px;line-height:1.55;color:var(--ink-muted);margin-top:8px;">Mobile + PC (Steam), cross-platform.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="apoiar" data-screen-label="Support" style="padding:clamp(56px,9vw,104px) clamp(16px,5vw,64px);background:var(--surface-sunken);border-top:1px solid var(--border-subtle);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;">// SUPPLIES <span style="color:var(--accent);">//</span> SUPPORT CHANNEL</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(34px,5.5vw,56px);line-height:1.0;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:6px 0 clamp(24px,4vw,40px);">Support the Shelter</h2>
+    <div class="paper-worn" style="position:relative;background:var(--surface-paper);color:var(--ink-on-paper);padding:clamp(28px,5vw,52px) clamp(24px,5vw,56px);box-shadow:var(--shadow-paper);clip-path:polygon(20px 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%,0 20px);max-width:760px;">
+      <div style="position:absolute;inset:0;pointer-events:none;opacity:.06;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+      <span style="position:absolute;top:18px;right:22px;font-family:var(--font-display);font-size:clamp(14px,2vw,18px);letter-spacing:.08em;color:var(--rust);border:2px solid var(--rust);padding:2px 12px;transform:rotate(-3deg);text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Soon</span>
+      <div style="position:relative;z-index:1;">
+        <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.65;color:#353832;margin-bottom:14px;">Conduta is an independent game. We want to build the shelter together with the community, without being held hostage by crowdfunding platforms.</p>
+        <p style="font-size:clamp(15px,1.9vw,18px);line-height:1.65;color:#353832;">Soon this page will take direct support: every contribution turns into development, art and servers.</p>
+        <button type="button" disabled style="margin-top:26px;display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 28px;font-family:var(--font-body);font-weight:600;font-size:14.5px;letter-spacing:.05em;text-transform:uppercase;color:#797976;background:rgba(28,30,27,.10);border:2px dashed rgba(28,30,27,.3);cursor:not-allowed;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);">Support the shelter — Soon</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comunidade" data-screen-label="Community" style="position:relative;padding:clamp(64px,10vw,120px) clamp(16px,5vw,64px);background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(224,215,132,.07),transparent 62%),var(--surface-base);border-top:1px solid var(--border-subtle);text-align:center;overflow:hidden;">
+  <span style="position:absolute;left:50%;top:clamp(24px,5vh,52px);transform:translateX(-50%) rotate(-3deg);font-family:var(--font-display);font-size:clamp(15px,2vw,20px);letter-spacing:.1em;color:var(--danger-text);border:3px double var(--danger-text);padding:3px 18px;opacity:.55;text-transform:uppercase;-webkit-mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);mask-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='120'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.30' numOctaves='3' seed='7'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0.55 0.7 0.85 1 1 1 1 1 1 1 1 1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='240' height='120' filter='url(%23w)' fill='black'/%3E%3C/svg%3E&quot;);">Classified</span>
+  <div style="max-width:760px;margin:0 auto;position:relative;z-index:1;">
+    <div style="font-family:var(--font-dossier);font-size:14px;color:var(--ink-muted);letter-spacing:.04em;margin-top:clamp(20px,4vh,30px);">// CALL-UP <span style="color:var(--accent);">//</span> THE SHELTER IS RECRUITING</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(40px,7vw,76px);line-height:.96;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:10px 0 16px;">The shelter has room<br>for you</h2>
+    <p style="font-size:clamp(15px,2vw,19px);line-height:1.6;color:var(--ink-soft);max-width:54ch;margin:0 auto;">Join the community, take part in the tests and help decide where the game goes.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:clamp(26px,4vh,38px);">
+      <a href="https://discord.gg/6fhu9wqWpm" target="_blank" rel="noopener" data-cta="discord" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 32px;font-family:var(--font-body);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-on-accent);background:var(--accent);text-decoration:none;transition:background 120ms var(--ease-out);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);" style-hover="background:var(--accent-hover);">Join the community</a>
+      <a href="https://play.google.com/store/apps/details?id=com.ownersheep.conduta" target="_blank" rel="noopener" data-cta="download-play" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 30px;font-family:var(--font-body);font-weight:600;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);background:transparent;border:2px solid var(--border-strong);text-decoration:none;transition:border-color 120ms var(--ease-out),color 120ms var(--ease-out);clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);" style-hover="border-color:var(--ink);color:#fff;">Get it on Play Store</a>
+    </div>
+  </div>
+</section>
+
+<footer data-screen-label="Footer" style="background:var(--surface-sunken);border-top:1px solid var(--border-medium);padding:clamp(40px,6vw,64px) clamp(16px,5vw,64px) clamp(32px,4vw,48px);">
+  <div style="max-width:1120px;margin:0 auto;">
+    <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-start;">
+      <div>
+        <a href="#hero" style="font-family:var(--font-display);font-size:30px;letter-spacing:.04em;color:var(--ink);text-decoration:none;">CONDUTA</a>
+        <div style="font-family:var(--font-body);font-weight:600;font-size:14px;color:var(--ink-soft);margin-top:8px;">OwnerSheep Studio © 2026</div>
+      </div>
+      <nav style="display:grid;grid-template-columns:repeat(2,auto);gap:6px 28px;">
+        <a href="#hero" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">The Game</a>
+        <a href="#historia" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Story</a>
+        <a href="#como" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">How to Play</a>
+        <a href="#condutas" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Conducts</a>
+        <a href="#times" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Teams</a>
+        <a href="#habilidades" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Abilities</a>
+        <a href="#fichas" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Files</a>
+        <a href="#features" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Features</a>
+        <a href="#roadmap" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Roadmap</a>
+        <a href="#apoiar" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Support</a>
+        <a href="#comunidade" style="font-family:var(--font-body);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-muted);text-decoration:none;transition:color 120ms var(--ease-out);" style-hover="color:var(--accent);">Community</a>
+      </nav>
+    </div>
+    <div style="border-top:1px solid var(--border-subtle);margin-top:clamp(28px,4vw,40px);padding-top:18px;font-family:var(--font-dossier);font-size:12.5px;color:var(--ink-muted);letter-spacing:.05em;">DOCUMENT ISSUED BY THE SHELTER ARCHIVE <span style="color:var(--accent);">//</span> CONTROLLED DISTRIBUTION</div>
+  </div>
+</footer>
+<script>
+(function(){
+  var el = document.getElementById('tw-text');
+  if (!el) return;
+  var full = 'SHELTER ARCHIVE // DOSSIER Nº 001 // RESTRICTED ACCESS';
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = full; return;
+  }
+  var i = 0;
+  var t = setInterval(function(){
+    i++; el.textContent = full.slice(0, i);
+    if (i >= full.length) clearInterval(t);
+  }, 42);
+})();
+(function(){
+  var els = document.querySelectorAll('[style-hover]');
+  Array.prototype.forEach.call(els, function(el){
+    var base = el.getAttribute('style') || '';
+    var hov = el.getAttribute('style-hover');
+    el.addEventListener('mouseenter', function(){ el.setAttribute('style', base + ';' + hov); });
+    el.addEventListener('mouseleave', function(){ el.setAttribute('style', base); });
+  });
+})();
+</script>
+
+<script>document.addEventListener("click",function(e){document.querySelectorAll("details.lang-menu[open]").forEach(function(d){if(!d.contains(e.target))d.removeAttribute("open")})});document.addEventListener("keydown",function(e){if(e.key==="Escape")document.querySelectorAll("details.lang-menu[open]").forEach(function(d){d.removeAttribute("open");d.querySelector("summary").focus()})});</script>
+</body>
+</html>

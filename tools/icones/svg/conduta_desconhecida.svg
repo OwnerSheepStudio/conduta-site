@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<title>conduta_desconhecida</title>
+<defs>
+<filter id="lapis" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="5" result="n"/>
+<feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="carvao" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="12" result="g"/>
+<feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.5" result="m"/>
+<feComposite in="SourceGraphic" in2="m" operator="in" result="s"/>
+<feDisplacementMap in="s" in2="g" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<pattern id="hachura" width="2.6" height="2.6" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
+<line x1="0" y1="0" x2="0" y2="2.6" stroke="#222927" stroke-width="1.2"/>
+</pattern>
+</defs>
+<g filter="url(#carvao)" fill="url(#hachura)" stroke="none" opacity=".95"><path d="M14 14 L32 8 L32 56 C20 46 14 32 14 14 Z"/></g>
+<g filter="url(#lapis)" fill="none" stroke="#222927" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M32 8 L50 14 C50 32 44 46 32 56 C20 46 14 32 14 14 Z"/><path d="M25.5 24 C25.5 18 38.5 17.5 38.5 24.5 C38.5 29.5 32 29.5 32 35.5" stroke-width="3"/><circle cx="32" cy="43" r="1.6" fill="#222927"/></g>
+<g fill="none" stroke="#E8E6DC" stroke-width=".8" stroke-linecap="round" opacity=".55"><path d="M46 18 L42 24"/></g>
+</svg>
