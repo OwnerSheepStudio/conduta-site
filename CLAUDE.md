@@ -4,7 +4,7 @@ Guia para agentes que trabalham neste repositório.
 
 ## Projeto
 
-Site estático do **Conduta** (OwnerSheep Studio), publicado em **ownersheep.com.br** (pt-BR na raiz, `/en/` e `/es/`). Página principal com história, regras, condutas, times, habilidades, fichas, roadmap e chamadas para a Play Store e o Discord. A política de privacidade do app fica em `/conduta/policy` (usada na Google Play: **nunca remover**).
+Site estático do **Conduta** (OwnerSheep Studio), publicado em **ownersheep.com.br** (pt-BR na raiz, `/en/` e `/es/`). Página principal com história, regras, condutas, times, habilidades, fichas, roadmap e chamadas para a Play Store e o Discord. A política de privacidade (`/conduta/policy`) e a exclusão de conta (`/conduta/account-deletion`) são exigidas pela Google Play: **nunca remover**. Nenhuma das duas tem link nas páginas de idioma.
 
 ## Onde está o que vai ao ar
 
@@ -14,6 +14,7 @@ site/                      → raiz publicada em ownersheep.com.br
   en/index.html            → /en/
   es/index.html            → /es/
   conduta/policy.html      → /conduta/policy (política de privacidade)
+  conduta/account-deletion.html → /conduta/account-deletion (exclusão de conta, exigida pela Google Play)
   ds-v2.css                → camada do Design System v2 (todas as línguas)
   fonts/                   → fontes auto-hospedadas
   portraits/<funcao>.webp  → retratos das fichas = retratos atuais do jogo (Assets/_Project/Art/Sprites/Roles/<Role>.png)
@@ -55,6 +56,8 @@ npx wrangler@4 deploy             # publica site/ no Worker conduta-site
 ```
 
 O domínio está ligado ao Worker no painel da Cloudflare; `wrangler.jsonc` não declara rotas para não mexer nisso.
+
+**Atenção:** o deploy substitui o conjunto inteiro de arquivos do Worker. Arquivo que não estiver em `site/` sai do ar. Em 19/11/2026 isso derrubou `/conduta/account-deletion` por dois dias. Antes de publicar, confira que as duas páginas legais estão em `site/conduta/`.
 
 Para conferir localmente: `python -m http.server 8787 --directory site`.
 
