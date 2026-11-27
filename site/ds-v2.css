@@ -155,3 +155,14 @@ img.ficha-retida{ width:64px; height:64px; padding:6px; box-sizing:border-box;
   radial-gradient(440px 300px at 6% 2%,rgba(10,14,12,.34),transparent 70%),
   radial-gradient(560px 360px at 97% 92%,rgba(10,14,12,.30),transparent 70%),
   radial-gradient(300px 200px at 88% 6%,rgba(139,79,61,.14),transparent 70%) !important; }
+
+/* Menu do topo: entre ~900 e 1280 px os links não cabiam e Roadmap/Apoiar/Comunidade
+   ficavam escondidos atrás do seletor de idioma. Aperta o espaçamento e tira os dois
+   atalhos redundantes (o logo já leva ao topo; Features fica entre Fichas e Roadmap). */
+@media (max-width:1280px){
+  .nav-links a{ padding:8px 7px !important; letter-spacing:.04em !important; }
+  .nav-links a[href="#hero"], .nav-links a[href="#features"]{ display:none; }
+}
+@media (max-width:1120px){
+  .nav-links a{ padding:8px 5px !important; letter-spacing:.02em !important; font-size:11px !important; }
+}
